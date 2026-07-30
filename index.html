@@ -3,199 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pablo - Nowa Strona</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #0f0f0f;
-            color: #ffffff;
-            overflow-x: hidden;
-        }
-
-        /* Nawigacja */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 2rem 5%;
-            z-index: 1000;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            color: #ffffff;
-        }
-
-        .menu-btn {
-            background: none;
-            border: none;
-            color: #ffffff;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            z-index: 1001;
-            padding: 10px 20px;
-        }
-
-        /* Pełnoekranowe Menu */
-        .fullscreen-menu {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: #1a1a1a;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 999;
-            visibility: hidden; /* Ukryte domyślnie */
-        }
-
-        .menu-links {
-            list-style: none;
-            text-align: center;
-        }
-
-        .menu-links li {
-            margin: 1.5rem 0;
-            overflow: hidden; /* Ukrywa litery przed animacją falową */
-        }
-
-        .menu-links a {
-            display: inline-block;
-            font-size: 4rem;
-            font-weight: 800;
-            text-decoration: none;
-            color: #ffffff;
-            text-transform: uppercase;
-            transition: color 0.3s ease;
-        }
-
-        .menu-links a:hover {
-            color: #00ffcc;
-        }
-
-        /* Styl pojedynczej litery do animacji */
-        .letter {
-            display: inline-block;
-            transform: translateY(100px);
-            opacity: 0;
-        }
-
-        /* Treść główna (opcjonalnie dla podglądu) */
-        .hero {
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            color: #444;
-        }
-    </style>
+    <title>Pablo - Strona Główna</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <!-- Nawigacja -->
     <header>
-        <div class="logo">PABLO</div>
+        <a href="#" class="logo" id="logoLink">Pablo</a>
         <button class="menu-btn" id="menuToggle">Menu</button>
     </header>
 
-    <!-- Menu Rozsuwane -->
-    <div class="fullscreen-menu" id="fullscreenMenu">
+    <!-- Rozsuwane Menu -->
+    <nav class="fullscreen-menu" id="fullscreenMenu">
         <ul class="menu-links">
-            <li><a href="#" class="menu-item">SEO</a></li>
-            <li><a href="#" class="menu-item">RESPONSYWNY</a></li>
-            <li><a href="#" class="menu-item">GSAP</a></li>
+            <li><a href="#" class="menu-item">About</a></li>
+            <li><a href="#" class="menu-item">Services</a></li>
+            <li><a href="#" class="menu-item">Contact</a></li>
         </ul>
-    </div>
+    </nav>
 
-    <!-- Główna sekcja -->
+    <!-- Sekcja Hero (Wideo w tle + Tekst na wierzchu) -->
     <section class="hero">
-        <h1>Witaj na stronie głównej</h1>
+        <div class="video-bg">
+            <video autoplay muted loop playsinline>
+                <source src="assets/video/world.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="hero-content" id="heroBox">
+            <h1>
+                Dbałość o wyszukiwanie w Google.<br>
+                Strony pod różne ekrany.<br>
+                Technologia animacyjna GSAP.
+            </h1>
+            <p class="h1__description">
+                Świat napędza technologia.
+            </p>
+        </div>
+    </section>
+
+    <section class="hero" style="background: #151515; height: 100vh;">
+        <h1>Kolejna sekcja (przewiń w dół)</h1>
     </section>
 
     <!-- GSAP z CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script>
-        // Przygotowanie liter do animacji falowej (rozbijamy każdy link na litery w spanach)
-        const menuItems = document.querySelectorAll('.menu-item');
-
-        menuItems.forEach(item => {
-            const text = item.textContent;
-            item.innerHTML = ''; // Czyszczenie tekstu
-            // Tworzenie spanów dla każdej litery
-            for (let i = 0; i < text.length; i++) {
-                const span = document.createElement('span');
-                // Obsługa spacji, aby zachować odstępy w słowach
-                span.textContent = text[i] === ' ' ? '\u00A0' : text[i];
-                span.classList.add('letter');
-                item.appendChild(span);
-            }
-        });
-
-        // Logika animacji menu
-        const menuBtn = document.getElementById('menuToggle');
-        const fullscreenMenu = document.getElementById('fullscreenMenu');
-        const letters = document.querySelectorAll('.letter');
-
-        let isOpen = false;
-
-        // Tworzymy timeline GSAP (ustawiony jako domyślnie zatrzymany)
-        const tl = gsap.timeline({ paused: true });
-
-        // Krok 1: Wysunięcie całego tła menu
-        tl.to(fullscreenMenu, {
-            visibility: 'visible',
-            clipPath: 'circle(150% at 90% 10%)', // Możesz zmienić efekt rozsuwania
-            duration: 0.1,
-            ease: 'power2.out'
-        })
-        // Animacja tła od góry/środka w dół
-        .fromTo(fullscreenMenu, 
-            { y: '-100%' }, 
-            { y: '0%', duration: 0.8, ease: 'power4.inOut' }
-        )
-        // Krok 2: Efekt fali dla liter (stagger z opóźnieniem)
-        .to(letters, {
-            y: 0,
-            opacity: 1,
-            duration: 0.8,
-            stagger: 0.03, // Klucz do efektu fali
-            ease: 'back.out(1.7)'
-        }, '-=0.4');
-
-        // Obsługa kliknięcia w przycisk
-        menuBtn.addEventListener('click', () => {
-            if (!isOpen) {
-                menuBtn.textContent = 'Zamknij';
-                fullscreenMenu.style.visibility = 'visible';
-                tl.play();
-            } else {
-                menuBtn.textContent = 'Menu';
-                tl.reverse();
-            }
-            isOpen = !isOpen;
-        });
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>

@@ -1,0 +1,176 @@
+/* --- Modern CSS Reset --- */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+:root {
+    --primary-c: #0f0f0f;
+    --secondary-c: #ffffff;
+}
+body {
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--primary-c);
+    color: var(--secondary-c);
+    overflow-x: hidden;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* --- Nagłówek i Nawigacja --- */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 5%;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--secondary-c);
+    cursor: pointer;
+}
+
+.menu-btn {
+    background: none;
+    border: none;
+    color: var(--secondary-c);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    z-index: 1001;
+    padding: 10px 20px;
+}
+
+/* --- Pełnoekranowe Menu --- */
+.fullscreen-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--primary-c);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    visibility: hidden;
+}
+
+.menu-links {
+    text-align: center;
+}
+
+.menu-links li {
+    margin: 1.5rem 0;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.menu-links a.menu-item {
+    display: inline-block;
+    font-size: 3rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: color 0.3s ease;
+}
+
+.menu-links a.menu-item:hover {
+    color: #888888;
+}
+
+/* Hero */
+.video-container{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+}
+
+/* --- Sekcja Hero z Wideo w Tle --- */
+.hero {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    overflow: hidden;
+    background-color: #0f0f0f;
+}
+
+/* Wideo jako pełne tło */
+.video-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.video-bg video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Wypełnia całą przestrzeń bez zniekształceń */
+}
+
+/* Opcjonalna ciemna orkiestracja/nakładka, żeby tekst był czytelny na wideo */
+.hero::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.91); /* Przyciemnienie tła wideo */
+    z-index: 2;
+}
+
+/* Zawartość tekstowa na wierzchu wideo */
+.hero-content {
+    position: relative;
+    z-index: 3;
+    text-align: left;
+    padding: 0 5%;
+    will-change: transform, opacity;
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #ffffff;
+    text-transform: uppercase;
+    line-height: 1.4;
+    margin-bottom: 3rem;
+}
+
+.h1__description {
+    font-size: 1.4em;
+    color: #deaa00;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+}
