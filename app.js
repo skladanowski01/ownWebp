@@ -1,11 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // --- KOD LENIS (Smooth Scroll) ---
+  gsap.registerPlugin(ScrollTrigger);
+
+  // 1. Inicjalizacja Lenis (Smooth Scroll)
   const lenis = new Lenis({
     duration: 1.2,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
   });
 
-  lenis.on('scroll', ScrollTrigger.update);
+  lenis.on("scroll", ScrollTrigger.update);
 
   gsap.ticker.add((time) => {
     lenis.raf(time * 1000);
@@ -13,8 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   gsap.ticker.lagSmoothing(0);
 
-
-  // --- KOD MENU (z poprzednich kroków) ---
+  // 2. Obsługa Pełnoekranowego Menu
   const menuToggleBtn = document.getElementById("menuToggle");
   const fullscreenMenu = document.getElementById("fullscreenMenu");
   const menuItems = document.querySelectorAll(".menu-item");
@@ -25,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   menuTimeline
     .to(fullscreenMenu, {
-      duration: 0.5,
+      duration: 0.4,
       opacity: 1,
       pointerEvents: "all",
       ease: "power2.inOut",
@@ -34,11 +35,12 @@ document.addEventListener("DOMContentLoaded", () => {
       menuItems,
       { y: 80, opacity: 0 },
       { duration: 0.5, y: 0, opacity: 1, stagger: 0.1, ease: "power3.out" },
-      "-=0.2"
+      "-=0.1"
     );
 
   function toggleMenu() {
     isMenuOpen = !isMenuOpen;
+
     if (isMenuOpen) {
       menuTimeline.play();
       menuToggleBtn.textContent = "Close";
@@ -51,38 +53,128 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   menuToggleBtn.addEventListener("click", toggleMenu);
-
   menuItems.forEach((item) => {
     item.addEventListener("click", () => {
       if (isMenuOpen) toggleMenu();
     });
   });
 
+  // 3. Animacja sekcji "Oferta" (ScrollTrigger)
+  const offerSection = document.querySelector(".offer-section");
+  const offerTiles = document.querySelectorAll(".offer-tile");
+  const offerTitle = document.querySelector(".offer-section h2");
 
-  // --- NOWY KOD: ANIMACJA STOPNIOWEGO ODSŁANIANIA SEO ---
-
-  const seoSection = document.querySelector(".hero-content2");
-  const seoItems = seoSection.querySelectorAll("h1, .hero__content-txt");
-
-  // Tworzymy oś czasu GSAP skojarzoną z przewijaniem (ScrollTrigger)
-  const seoTimeline = gsap.timeline({
+  const offerTimeline = gsap.timeline({
     scrollTrigger: {
-      trigger: seoSection, // Przełącznik znajduje się w tej sekcji
-      start: "top 80%",   // Animacja zaczyna się, gdy góra sekcji jest 80% od góry okna
-      end: "top 50%",     // Animacja kończy się, gdy góra sekcji jest 50% od góry okna
-      scrub: 1.5,        // "Płynne przewijanie": animacja podąża za scrollowaniem, z lekkim opóźnieniem (wartość w sekundy)
-      // markers: true,  // Odkomentuj tę linię, aby zobaczyć znaczniki pomocnicze
+      trigger: offerSection,
+      start: "top 75%",
+      end: "bottom 20%",
+      toggleActions: "play reverse play reverse",
+    },
+  });
+
+  offerTimeline
+    .to(offerSection, {
+      opacity: 1,
+      duration: 0.5,
+      ease: "power2.out",
+    })
+    .fromTo(
+      offerTitle,
+      { y: 50, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" },
+      "-=0.2"
+    )
+    .to(
+      offerTiles,
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        stagger: 0.15,
+        ease: "back.out(1.7)",
+      },
+      "-=0.2"
+    );
+
+  // 4. LOGIKA MODALI
+  const modalButtons = document.querySelectorAll("[data-modal]");
+  let activeModal = null;
+  let activeModalTimeline = null;
+
+  function openModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (!modal) return;
+
+    activeModal = modal;
+    const modalContent = modal.querySelector(".modal-content");
+
+    // Zatrzymaj przewijanie tła
+    lenis.stop();
+
+    // Utwórz animację pojawiania się
+    activeModalTimeline = gsap.timeline();
+    activeModalTimeline
+      .set(modal, { visibility: "visible", pointerEvents: "all" })
+      .to(modal, { opacity: 1, duration: 0.3, ease: "power2.out" })
+      .to(
+        modalContent,
+        { scale: 1, duration: 0.4, ease: "back.out(1.4)" },
+        "-=0.2"
+      );
+  }
+
+  function closeModal() {
+    if (!activeModal) return;
+
+    const modal = activeModal;
+    const modalContent = modal.querySelector(".modal-content");
+
+    gsap.timeline({
+      onComplete: () => {
+        gsap.set(modal, { visibility: "hidden", pointerEvents: "none" });
+        activeModal = null;
+        // Przywróć skrolowanie tylko jeśli menu nawigacyjne nie jest otwarte
+        if (!isMenuOpen) lenis.start();
+      },
+    })
+      .to(modalContent, { scale: 0.8, duration: 0.2, ease: "power2.in" })
+      .to(modal, { opacity: 0, duration: 0.2, ease: "power2.in" }, "-=0.1");
+  }
+
+  // Otwieranie na kliknięcie przycisku oferty
+  modalButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const modalId = btn.getAttribute("data-modal");
+      openModal(modalId);
+    });
+  });
+
+  // Zamykanie przyciskiem "X" lub kliknięciem w tło (overlay)
+  document.querySelectorAll(".modal").forEach((modal) => {
+    const closeBtn = modal.querySelector(".modal-close");
+    const overlay = modal.querySelector(".modal-overlay");
+
+    if (closeBtn) closeBtn.addEventListener("click", closeModal);
+    if (overlay) overlay.addEventListener("click", closeModal);
+  });
+
+  // Zamykanie klawiszem ESC
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && activeModal) {
+      closeModal();
     }
   });
-
-  // Dodajemy kroki do osi czasu: otwarcie maski
-  seoTimeline.to(seoItems, {
-    duration: 1,
-    opacity: 1, // Dodatkowe zabezpieczenie
-    clipPath: "polygon(0 0%, 100% 0%, 100% 100%, 0 100%)", // Otwarta maska
-    stagger: 0.2, // Kolejne elementy pojawiają się po sobie
-    ease: "power2.out",
-  });
-
 });
 
+// Wymuszenie odtworzenia wideo na urządzeniach mobilnych
+const heroVideo = document.querySelector(".video-bg video");
+if (heroVideo) {
+  heroVideo.muted = true;
+  const playPromise = heroVideo.play();
+  if (playPromise !== undefined) {
+    playPromise.catch((error) => {
+      console.warn("Autoplay zablokowany przez przeglądarkę mobilną:", error);
+    });
+  }
+}

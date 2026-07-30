@@ -22,8 +22,8 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 1000; /* Najwyższa warstwa, aby przycisk był zawsze dostępny */
-  mix-blend-mode: difference; /* Zapewnia widoczność na dowolnym tle */
+  z-index: 1000;
+  mix-blend-mode: difference;
 }
 
 .logo {
@@ -60,7 +60,7 @@ header {
   width: 100vw;
   height: 100vh;
   background-color: #000000;
-  z-index: 900; /* Poniżej header (1000), ale powyżej reszty strony */
+  z-index: 900;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -75,7 +75,7 @@ header {
 
 .menu-links li {
   margin: 1.5rem 0;
-  overflow: hidden; /* Odpowiada za wysuwanie tekstu zza krawędzi */
+  overflow: hidden;
 }
 
 .menu-item {
@@ -83,7 +83,7 @@ header {
   text-decoration: none;
   font-size: 3rem;
   font-weight: 300;
-  display: inline-block; /* Konieczne dla poprawnego działania transform w GSAP */
+  display: inline-block;
   will-change: transform, opacity;
   transition: opacity 0.3s ease;
 }
@@ -92,7 +92,7 @@ header {
   opacity: 0.6;
 }
 
-/* Sekcja Hero z wideo */
+/* Sekcje Hero */
 .hero {
   position: relative;
   width: 100%;
@@ -143,6 +143,8 @@ header {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   color: #ffffff;
+  font-family: inherit;
+  font-size: 1rem;
   cursor: pointer;
   transition: transform 0.3s ease, background 0.3s ease;
 }
@@ -152,33 +154,110 @@ header {
   background: rgba(255, 255, 255, 0.25);
 }
 
-.hero-content2 {
-  position: relative;
-  z-index: 2;
-  text-align: center;
-  max-width: 800px;
-  padding: 0 1.5rem;
-}
-.hero-content2 h1 {
+.hero-content h2 {
   font-size: clamp(2.5rem, 6vw, 5rem);
   font-weight: 800;
   line-height: 1.1;  
-  margin-bottom: 2rem;
   text-transform: uppercase;
+  margin-bottom: 4rem;
 }
-.hero-content2 p {
-  font-size: clamp(.35rem, 1vw, 3rem);
-  font-weight: 800;
-  line-height: 1.5;  
-  margin-bottom: 2rem;
-  text-transform: uppercase;
-  color: #dd8f00;
-}
-/* --- STYL DLA STOPNIOWEGO ODSŁANIANIA --- */
 
-/* Stan początkowy dla maski (tekst jest ukryty) */
-.hero-content2 h1,
-.hero-content2 p {
-  opacity: 0; /* Dodatkowe zabezpieczenie */
-  clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%); /* Zamknięta maska od dołu */
+.h2__btn-about-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem;    
+}
+
+/* Stan początkowy sekcji oferta dla GSAP */
+.offer-section {
+  opacity: 0;
+}
+
+.offer-tile {
+  opacity: 0;
+  transform: translateY(40px);
+  will-change: transform, opacity;
+  width: 100%;
+  max-width: 300px;
+}
+
+/* --- STYLE DLA MODALI --- */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 2000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+}
+
+.modal-content {
+  position: relative;
+  z-index: 2001;
+  background: #151515;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  padding: 3rem 2.5rem;
+  max-width: 550px;
+  width: 90%;
+  text-align: left;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  transform: scale(0.8);
+}
+
+.modal-close {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.5rem;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 2rem;
+  cursor: pointer;
+  line-height: 1;
+  transition: color 0.3s ease;
+}
+
+.modal-close:hover {
+  color: #ffffff;
+}
+
+.modal-content h3 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #dd8f00;
+  margin-bottom: 0.3rem;
+  text-transform: uppercase;
+}
+
+.modal-content h4 {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 1.5rem;
+}
+
+.modal-content p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #d1d1d1;
 }

@@ -25,7 +25,7 @@
         </ul>
     </nav>
 
-    <!-- Sekcja Hero (Wideo w tle + Tekst na wierzchu) -->
+    <!-- Sekcja Hero (Wideo w tle) -->
     <section class="hero">
         <div class="video-bg">
             <video autoplay muted loop playsinline>
@@ -33,26 +33,68 @@
             </video>
         </div>
         <div class="hero-content" id="heroBox">
-            <h1>Świat napędza technologia</h1>
+            <h1>Technologia napędza świat.</h1>
             <p class="h1__btn-contact">Napisz E-Mail</p>
         </div>
     </section>
 
-    <section class="hero">        
-        <div class="hero-content2" id="heroBox">
-            <h1>SEO</h1>
-            <p class="hero__content-txt">(Search Engine Optimization) <br>
-                to proces optymalizacji stron internetowych, który ma na celu poprawę ich widoczności 
-                w bezpłatnych (organicznych) wynikach wyszukiwania.</p>
-
-                <p class="hero__content-txt">Dbam o te szczegóły by strona dobrze pozycjonowała się w internecie.<br>
-                Zachowując minimalizm, wagę strony i odpowiednie meta-tagi które są niezbędne by strona pozycjonowała się w internecie.</p>
+    <!-- Sekcja Oferta z przyciskami otwierającymi modale -->
+    <section class="hero offer-section">        
+        <div class="hero-content" id="heroBoxOffer">
+            <h2>Oferta</h2>
+            <div class="h2__btn-about-box">
+                <button class="h1__btn-contact offer-tile" data-modal="modal-seo">SEO</button>
+                <button class="h1__btn-contact offer-tile" data-modal="modal-rwd">RWD</button>
+                <button class="h1__btn-contact offer-tile" data-modal="modal-gsap">GSAP</button>
+                <button class="h1__btn-contact offer-tile" data-modal="modal-minimalist">MINIMALIST</button>
+            </div>
         </div>
     </section>
 
-    <!-- Skrypty GSAP i Lenis -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <!-- MODALE OFERTY -->
+    <div class="modal" id="modal-seo">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <h3>SEO</h3>
+            <h4>Search Engine Optimization</h4>
+            <p>Proces optymalizacji stron internetowych mający na celu poprawę widoczności w organicznych wynikach wyszukiwania. Dbam o strukturę kodu, metatagi oraz szybkość ładowania, aby Twoja strona osiągała najwyższe pozycje w Google.</p>
+        </div>
+    </div>
+
+    <div class="modal" id="modal-rwd">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <h3>RWD</h3>
+            <h4>Responsive Web Design</h4>
+            <p>Projektowanie stron, które układają się idealnie na każdym urządzeniu – od smartfonów, przez tablety, aż po ekrany 4K. Gwarancja doskonałego User Experience bez względu na rozdzielczość.</p>
+        </div>
+    </div>
+
+    <div class="modal" id="modal-gsap">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <h3>GSAP</h3>
+            <h4>GreenSock Animation Platform</h4>
+            <p>Zaawansowane, płynne animacje interaktywne i efektowny scroll-driven storytelling. Tworzę unikalne doświadczenia wizualne, które wyróżniają markę na tle konkurencji.</p>
+        </div>
+    </div>
+
+    <div class="modal" id="modal-minimalist">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <h3>MINIMALIST</h3>
+            <h4>Czysta Forma i Szybkość</h4>
+            <p>Mniej znaczy więcej. Usuwam zbędny kod i zbędne elementy wizualne, stawiając na nowoczesną estetykę, przejrzystość treści oraz ekstremalnie szybkie ładowanie strony.</p>
+        </div>
+    </div>
+
+    <!-- Skrypty GSAP i Lenis z CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/lenis@1.3.25/dist/lenis.min.js"></script>
     <script src="app.js"></script>
 </body>
