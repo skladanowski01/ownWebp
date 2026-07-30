@@ -178,3 +178,86 @@ if (heroVideo) {
     });
   }
 }
+// 5. ANIMACJA SEKCJI "O MNIE" (ScrollTrigger)
+  const aboutSection = document.querySelector(".about-section");
+  const aboutTitle = document.querySelector(".about-title");
+  const aboutImgWrapper = document.querySelector(".about-image-wrapper");
+  const aboutTexts = document.querySelectorAll(".about-lead, .about-description");
+
+  const aboutTimeline = gsap.timeline({
+    scrollTrigger: {
+      trigger: aboutSection,
+      start: "top 70%",
+      end: "bottom 20%",
+      toggleActions: "play reverse play reverse",
+    },
+  });
+
+  aboutTimeline
+    .to(aboutSection, {
+      opacity: 1,
+      duration: 0.4,
+      ease: "power2.out",
+    })
+    .fromTo(
+      aboutTitle,
+      { y: 40, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" },
+      "-=0.2"
+    )
+    .to(
+      aboutImgWrapper,
+      {
+        opacity: 1,
+        scale: 1,
+        duration: 0.6,
+        ease: "back.out(1.4)",
+      },
+      "-=0.3"
+    )
+    .to(
+      aboutTexts,
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        stagger: 0.15,
+        ease: "power3.out",
+      },
+      "-=0.4"
+    );
+    // 6. ANIMACJA STOPKI (ScrollTrigger)
+  const footer = document.querySelector(".site-footer");
+  const footerElements = document.querySelectorAll(".footer-cta, .footer-content, .footer-bottom");
+
+  gsap.fromTo(
+    footer,
+    { opacity: 0 },
+    {
+      opacity: 1,
+      duration: 0.8,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: footer,
+        start: "top 85%",
+        toggleActions: "play reverse play reverse",
+      },
+    }
+  );
+
+  gsap.fromTo(
+    footerElements,
+    { y: 30, opacity: 0 },
+    {
+      y: 0,
+      opacity: 1,
+      duration: 0.6,
+      stagger: 0.2,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: footer,
+        start: "top 75%",
+        toggleActions: "play reverse play reverse",
+      },
+    }
+  );
