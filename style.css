@@ -352,7 +352,7 @@ header {
   position: relative;
   background-color: #050505;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 5rem 1.5rem 2rem;
+  padding: 4rem 1.5rem 2rem;
   z-index: 2;
   opacity: 0; /* Stan początkowy dla GSAP */
 }
