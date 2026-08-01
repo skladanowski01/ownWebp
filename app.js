@@ -187,8 +187,8 @@ if (heroVideo) {
   const aboutTimeline = gsap.timeline({
     scrollTrigger: {
       trigger: aboutSection,
-      start: "top 70%",
-      end: "bottom 20%",
+      start: "top",
+      end: "bottom",
       toggleActions: "play reverse play reverse",
     },
   });
@@ -239,7 +239,7 @@ if (heroVideo) {
       ease: "power2.out",
       scrollTrigger: {
         trigger: footer,
-        start: "top 85%",
+        start: "top 100%",
         toggleActions: "play reverse play reverse",
       },
     }
