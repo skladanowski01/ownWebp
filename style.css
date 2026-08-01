@@ -325,14 +325,6 @@ header {
   transform: translateY(30px);
 }
 
-.about-description {
-  font-size: 1.05rem;
-  line-height: 1.7;
-  color: #c0c0c0;
-  opacity: 0;
-  transform: translateY(30px);
-}
-
 /* Responsywność dla urządzeń mobilnych */
 @media (max-width: 768px) {
   .about-grid {
